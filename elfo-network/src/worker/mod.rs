@@ -902,6 +902,9 @@ impl remote::RemoteHandle for RemoteHandle {
                 Ok(false) => unreachable!(),
                 Err(_) => {}
             }
+        } else {
+            // Forget token to prevent recursion on drop
+            token.forget();
         }
 
         trace!(addr = %recipient, "flow is closed, response is lost");
